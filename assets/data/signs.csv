@@ -1,0 +1,36 @@
+Id	Name	Description
+R302a	Hướng đi phải đi vòng chướng ngại vật	Các loại xe (cơ giới và thô sơ) hướng đi vòng sang phải để qua một chướng ngại vật.
+R409	Chỗ quay xe	Chỉ dẫn vị trí được phép quay đầu xe kiểu chữ U nhưng không cho phép rẽ trái, trừ các xe được quyền ưu tiên theo Luật Giao thông đường bộ.
+p102	Cấm đi ngược chiều	Cấm các phương tiện giao thông di chuyển trên đường ngược chiều.
+p103a	Cấm xe ô tô số hiệu	Thông báo đường cấm tất cả các loại xe cơ giới kể cả môtô 3 bánh có thùng đi qua, trừ môtô hai bánh, xe gắn máy và các xe được ưu tiên theo quy định.
+p103b	Cấm xe ôtô rẽ phải	Thông báo đường cấm tất cả các loại xe cơ giới kể cả xe môtô 3 bánh có thùng xe rẽ phải, trừ xe môtô hai bánh, xe gắn máy và các xe được ưu tiên theo quy định của pháp luật.
+p103c	Cấm xe ôtô rẽ trái	Thông báo đường cấm tất cả các loại xe cơ giới kể cả xe môtô 3 bánh có thùng xe rẽ trái, trừ xe môtô hai bánh, xe gắn máy và các xe được ưu tiên theo quy định của pháp luật.
+p104	Cấm xe máy	Thông báo đường cấm tất cả các loại mô tô đi qua, trừ các xe môtô được ưu tiên theo quy định
+p112	Cấm người đi bộ	Người đi bộ không được đi bộ vào đoạn đường trước mặt.
+p123a	Cấm các phương tiện rẽ trái	Thông báo cấm rẽ trái ở những vị trí đường giao nhau, biển không có giá trị cấm quay đầu xe
+p123b	Cấm các phương tiện rẽ phải	Thông báo cấm rẽ phải ở những vị trí đường giao nhau, biển không có giá trị cấm quay đầu xe
+p124a	Cấm quay đầu xe	Cấm tất cả các phương tiện Quay đầu xe
+p124b	Cấm ô tô quay đầu xe	Cấm xe ô tô và xe mô tô 3 bánh (cide car) quay đầu theo kiểu chữ U, trừ các xe được ưu tiên theo quy định.
+p125	Cấm các loại xe cơ giới vượt nhau	Biển có hiệu lực cấm tất cả các loại xe cơ giới vượt nhau (kể cả xe được ưu tiên theo quy định) nhưng được phép vượt xe máy 2 bánh, xe gắn máy.
+p127_20	Tốc độ tối đa 20km/h	Cấm các loại xe cơ giới chạy với tốc độ tối đa vượt quá 20km/h trừ các xe được quyền ưu tiên theo quy định của pháp luật.
+p127_30	Tốc độ tối đa 30km/h	Cấm các loại xe cơ giới chạy với tốc độ tối đa vượt quá 30km/h trừ các xe được quyền ưu tiên theo quy định của pháp luật.
+p127_40	Tốc độ tối đa 40km/h	Cấm các loại xe cơ giới chạy với tốc độ tối đa vượt quá 40km/h trừ các xe được quyền ưu tiên theo quy định của pháp luật.
+p127_50	Tốc độ tối đa 50km/h	Cấm các loại xe cơ giới chạy với tốc độ tối đa vượt quá 50km/h trừ các xe được quyền ưu tiên theo quy định của pháp luật.
+p127_60	Tốc độ tối đa 60km/h	Cấm các loại xe cơ giới chạy với tốc độ tối đa vượt quá 60km/h trừ các xe được quyền ưu tiên theo quy định của pháp luật.
+p127_70	Tốc độ tối đa 70km/h	Cấm các loại xe cơ giới chạy với tốc độ tối đa vượt quá 70km/h trừ các xe được quyền ưu tiên theo quy định của pháp luật.
+p127_80	Tốc độ tối đa 80km/h	Cấm các loại xe cơ giới chạy với tốc độ tối đa vượt quá 80km/h trừ các xe được quyền ưu tiên theo quy định của pháp luật.
+p127_90	Tốc độ tối đa 90km/h	Cấm các loại xe cơ giới chạy với tốc độ tối đa vượt quá 90km/h trừ các xe được quyền ưu tiên theo quy định của pháp luật.
+p130	Cấm dừng xe và đỗ xe	Cấm các loại xe cơ giới dừng và đỗ ở phía đường có đặt biển trừ các xe được ưu tiên theo quy định.
+p131a	Cấm đổ xe	Cấm các loại xe cơ giới đỗ ở phía đường có đặt biển
+w201a	Chỗ ngoặt nguy hiểm vòng bên trái	Báo hiệu đoạn đường sắp đến một điểm có chỗ ngoặt nguy hiểm vòng bên trái.
+w201b	Chỗ ngoặt nguy hiểm vòng bên phải	Báo hiệu cho người tham gia giao thông biết được đoạn đường sắp đến một điểm có chỗ ngoặt nguy hiểm vòng bên phải.
+w203a	Đường bị hẹp cả hai bên	Báo hiệu cho người tham gia giao thông biết được đoạn đường phía trước bị hẹp rất đột ngột ở cả 2 bên.
+w203b	Đường bị hẹp bên trái.	Báo hiệu cho người tham gia giao thông biết được đoạn đường phía trước bị hẹp đột ngột về phía trái.
+w203c	Đường bị hẹp bên phải.	Báo hiệu cho người tham gia giao thông biết được đoạn đường phía trước bị hẹp đột ngột về phía phải.
+w205a	Đường giao nhau	Báo hiệu phía trước sắp đến nơi giao nhau của các tuyến đường cùng cấp (không có đường nào ưu tiên).
+w207a	Giao nhau với đường không ưu tiên	Báo hiệu phía trước sắp đến nơi giao nhau với đường không ưu tiên.
+w207b	Giao nhau với đường không ưu tiên ( bên phải )	Báo hiệu phía trước sắp đến nơi giao nhau với đường không ưu tiên.
+w207c	Giao nhau với đường không ưu tiên ( bên trái )	Báo hiệu phía trước sắp đến nơi giao nhau với đường không ưu tiên.
+w209	Giao nhau có tính hiệu đèn.	Báo trước nơi giao nhau có sự điều khiển giao thông bằng tín hiệu đèn (hệ thống 3 đèn bật theo chiều đứng) và trong trường hợp thiết bị tín hiệu đèn không được nhìn thấy rõ ràng và kịp thời.
+w224	Đường người đi bộ cắt ngang	Báo trước sắp tới là phần đường dành cho người đi bộ sang qua đường.Khi gặp biển này, các phương tiện phải giảm tốc độ, nhường ưu tiên cho người đi bộ.
+w225	Biển báo nguy hiểm trẻ em	Báo trước là gần đến đoạn đường thường có trẻ em đi ngang qua hoặc tụ tập trên đường như ở vườn trẻ, trường học, câu lạc bộ
