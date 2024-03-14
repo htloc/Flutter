@@ -1,9 +1,14 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
-import 'package:pytorch_lite/pigeon.dart';
-import 'package:pytorch_lite/pytorch_lite.dart';
 import 'package:pytorch_lite_example/ui/camera_view.dart';
 import 'package:pytorch_lite_example/ui/camera_view_singleton.dart';
+
+class AudioAuto {
+  final String name;
+  final DateTime time;
+  bool isPlay;
+  AudioAuto({required this.name, required this.time, required this.isPlay});
+}
 
 /// Individual bounding box
 class BoxWidget extends StatelessWidget {
@@ -59,7 +64,7 @@ class BoxWidget extends StatelessWidget {
               Audio("assets/records/$signId.mp3"),
             );
           } catch (t) {
-            print("Has an error when open audio.");
+            //print("Has an error when open audio.");
           }
         },
         child: Container(

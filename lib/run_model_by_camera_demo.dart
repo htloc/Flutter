@@ -1,10 +1,12 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
-import 'package:pytorch_lite/pytorch_lite.dart';
 import 'package:pytorch_lite_example/ui/box_widget.dart';
-
+import 'dart:async';
 import 'ui/camera_view.dart';
+import 'package:assets_audio_player/assets_audio_player.dart';
 
-/// [RunModelByCameraDemo] stacks [CameraView] and [BoxWidget]s with bottom sheet for stats
+/// [RunModelByCameraDemo] stacks [CameraView] and [BoxWidget]s with bottom sheet for
 class RunModelByCameraDemo extends StatefulWidget {
   const RunModelByCameraDemo({Key? key}) : super(key: key);
 
@@ -15,12 +17,29 @@ class RunModelByCameraDemo extends StatefulWidget {
 class _RunModelByCameraDemoState extends State<RunModelByCameraDemo> {
   List<MyDetectedObject>? results;
   Duration? objectDetectionInferenceTime;
-
+  late List<AudioAuto> autoAudio = [];
   String? classification;
   Duration? classificationInferenceTime;
+  final assetsAudioPlayer = AssetsAudioPlayer();
+  final queue = Queue<AudioAuto>(); // ListQueue() by default
 
   /// Scaffold Key
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
+  Timer? timer;
+  @override
+  void initState() {
+    super.initState();
+    timer = Timer.periodic(const Duration(seconds: 1), (Timer t) {
+      checkAndRemove();
+      autoAudioHandler();
+    });
+  }
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -89,9 +108,45 @@ class _RunModelByCameraDemoState extends State<RunModelByCameraDemo> {
     if (results == null) {
       return Container();
     }
+
+    checkAndAdd(results);
     return Stack(
       children: results.map((e) => BoxWidget(result: e)).toList(),
     );
+  }
+
+  void checkAndRemove() {
+    autoAudio.removeWhere((item) =>
+        (DateTime.now().difference(item.time).inSeconds >= 10) && item.isPlay);
+  }
+
+  void checkAndAdd(List<MyDetectedObject>? results) {
+    results?.forEach((element) {
+      if (!autoAudio.any((a) => a.name == element.sign?.id)) {
+        autoAudio.add(AudioAuto(
+            name: element.sign!.id, time: DateTime.now(), isPlay: false));
+      }
+    });
+  }
+
+  void autoAudioHandler() {
+    print(assetsAudioPlayer.isPlaying.value);
+    if (!assetsAudioPlayer.isPlaying.value) {
+      List<Audio> audios = autoAudio
+          .where((element) => !element.isPlay)
+          .map((e) => Audio("assets/records/records_signs_auto/${e.name}.mp3"))
+          .toList();
+
+      autoAudio.forEach((element) {
+        if (!element.isPlay) {
+          element.isPlay = true;
+        }
+      });
+
+      assetsAudioPlayer.open(Playlist(audios: audios),
+          loopMode: LoopMode.none //loop the full playlist
+          );
+    }
   }
 
   void resultsCallback(List<MyDetectedObject> results, Duration inferenceTime) {
@@ -102,18 +157,6 @@ class _RunModelByCameraDemoState extends State<RunModelByCameraDemo> {
       //var res = results.map((e) => e.result).toList();
       this.results = results;
       objectDetectionInferenceTime = inferenceTime;
-      // for (var element in results) {
-      //   print({
-      //     "rect": {
-      //       "left": element.result.rect.left,
-      //       "top": element.result.rect.top,
-      //       "width": element.result.rect.width,
-      //       "height": element.result.rect.height,
-      //       "right": element.result.rect.right,
-      //       "bottom": element.result.rect.bottom,
-      //     },
-      //   });
-      // }
     });
   }
 
@@ -127,10 +170,6 @@ class _RunModelByCameraDemoState extends State<RunModelByCameraDemo> {
       classificationInferenceTime = inferenceTime;
     });
   }
-
-  // static const BOTTOM_SHEET_RADIUS = Radius.circular(24.0);
-  // static const BORDER_RADIUS_BOTTOM_SHEET = BorderRadius.only(
-  //     topLeft: BOTTOM_SHEET_RADIUS, topRight: BOTTOM_SHEET_RADIUS);
 }
 
 /// Row for one Stats field
