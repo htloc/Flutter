@@ -6,8 +6,8 @@ import 'package:camera/camera.dart';
 import 'package:csv/csv.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:pytorch_lite/pytorch_lite.dart';
 import 'package:collection/collection.dart';
+import 'package:pytorch_lite/pytorch_lite.dart';
 
 import 'camera_view_singleton.dart';
 
@@ -61,10 +61,11 @@ class CameraView extends StatefulWidget {
       resultsCallback;
   final Function(String classification, Duration inferenceTime)
       resultsCallbackClassification;
+  final bool isBestModel;
 
   /// Constructor
   const CameraView(this.resultsCallback, this.resultsCallbackClassification,
-      {Key? key})
+      {Key? key, required this.isBestModel})
       : super(key: key);
   @override
   _CameraViewState createState() => _CameraViewState();
@@ -101,9 +102,9 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
 
   // This function is triggered when the floating button is pressed
   void _loadCSV() async {
-    List<MySign> _listData = await _loadCSVData();
+    List<MySign> listData = await _loadCSVData();
     setState(() {
-      _data = _listData;
+      _data = listData;
     });
   }
 
@@ -119,10 +120,14 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
 
   //load your model
   Future loadModel() async {
-    String pathObjectDetectionModel = "assets/models/best.torchscript";
+    final int imageSize = widget.isBestModel ? 640 : 192;
+    ;
+    String pathObjectDetectionModel = widget.isBestModel
+        ? "assets/models/best.torchscript"
+        : "assets/models/seco.torchscript";
     try {
       _objectModel = await PytorchLite.loadObjectDetectionModel(
-          pathObjectDetectionModel, 35, 640, 640,
+          pathObjectDetectionModel, 35, imageSize, imageSize,
           labelPath: "assets/labels/labels.txt",
           objectDetectionModelType: ObjectDetectionModelType.yolov8);
     } catch (e) {
@@ -137,7 +142,6 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
   void initStateAsync() async {
     WidgetsBinding.instance.addObserver(this);
     await loadModel();
-
     // Camera initialization
     try {
       initializeCamera();
@@ -191,7 +195,7 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
     var desc = cameras[idx];
     _camFrameRotation = Platform.isAndroid ? desc.sensorOrientation : 0;
     // cameras[0] for rear-camera
-    cameraController = CameraController(desc, ResolutionPreset.ultraHigh,
+    cameraController = CameraController(desc, ResolutionPreset.high,
         imageFormatGroup: Platform.isAndroid
             ? ImageFormatGroup.yuv420
             : ImageFormatGroup.bgra8888,
@@ -258,7 +262,6 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
     if (_objectModel != null) {
       // Start the stopwatch
       Stopwatch stopwatch = Stopwatch()..start();
-
       List<ResultObjectDetection> objDetect =
           await _objectModel!.getCameraImagePrediction(
         cameraImage,
@@ -272,7 +275,6 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
       List<MyDetectedObject> newObj =
           objDetect.map((e) => mapResult(e)).toList();
 
-      // print("data outputted $objDetect");
       widget.resultsCallback(newObj, stopwatch.elapsed);
     }
     if (!mounted) {
@@ -291,7 +293,6 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
     if (!mounted) {
       return;
     }
-
     runObjectDetection(cameraImage);
     if (!mounted) {
       return;

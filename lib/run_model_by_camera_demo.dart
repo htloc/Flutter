@@ -1,5 +1,3 @@
-import 'dart:collection';
-
 import 'package:flutter/material.dart';
 import 'package:pytorch_lite_example/ui/box_widget.dart';
 import 'dart:async';
@@ -8,8 +6,10 @@ import 'package:assets_audio_player/assets_audio_player.dart';
 
 /// [RunModelByCameraDemo] stacks [CameraView] and [BoxWidget]s with bottom sheet for
 class RunModelByCameraDemo extends StatefulWidget {
-  const RunModelByCameraDemo({Key? key}) : super(key: key);
+  final bool isBestModel;
 
+  const RunModelByCameraDemo({Key? key, required this.isBestModel})
+      : super(key: key);
   @override
   _RunModelByCameraDemoState createState() => _RunModelByCameraDemoState();
 }
@@ -21,7 +21,6 @@ class _RunModelByCameraDemoState extends State<RunModelByCameraDemo> {
   String? classification;
   Duration? classificationInferenceTime;
   final assetsAudioPlayer = AssetsAudioPlayer();
-  final queue = Queue<AudioAuto>(); // ListQueue() by default
 
   /// Scaffold Key
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
@@ -49,7 +48,11 @@ class _RunModelByCameraDemoState extends State<RunModelByCameraDemo> {
       body: Stack(
         children: <Widget>[
           // Camera View
-          CameraView(resultsCallback, resultsCallbackClassification),
+          CameraView(
+            resultsCallback,
+            resultsCallbackClassification,
+            isBestModel: widget.isBestModel,
+          ),
 
           // Bounding boxes
           boundingBoxes2(results),
@@ -130,17 +133,18 @@ class _RunModelByCameraDemoState extends State<RunModelByCameraDemo> {
   }
 
   void autoAudioHandler() {
-    print(assetsAudioPlayer.isPlaying.value);
     if (!assetsAudioPlayer.isPlaying.value) {
       List<Audio> audios = autoAudio
           .where((element) => !element.isPlay)
           .map((e) => Audio("assets/records/records_signs_auto/${e.name}.mp3"))
           .toList();
 
-      autoAudio.forEach((element) {
-        if (!element.isPlay) {
-          element.isPlay = true;
-        }
+      setState(() {
+        autoAudio.forEach((element) {
+          if (!element.isPlay) {
+            element.isPlay = true;
+          }
+        });
       });
 
       assetsAudioPlayer.open(Playlist(audios: audios),
@@ -154,7 +158,6 @@ class _RunModelByCameraDemoState extends State<RunModelByCameraDemo> {
       return;
     }
     setState(() {
-      //var res = results.map((e) => e.result).toList();
       this.results = results;
       objectDetectionInferenceTime = inferenceTime;
     });

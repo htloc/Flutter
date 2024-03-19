@@ -37,6 +37,7 @@ dependencies:
   csv: ^6.0.0
   assets_audio_player: ^3.1.1
   simp_cache: ^0.0.2
+  collection: ^1.18.0
 
 dev_dependencies:
   flutter_test:
@@ -66,8 +67,7 @@ flutter:
     - assets/records/
     - assets/records/records_signs_auto/
     - assets/data/
-    - assets/kitten.jpeg
-    - assets/8k-test.jpg
+
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg
