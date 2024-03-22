@@ -1,6 +1,6 @@
 Id	Name	Description
-R302a	Hướng đi phải đi vòng chướng ngại vật	Các loại xe (cơ giới và thô sơ) hướng đi vòng sang phải để qua một chướng ngại vật.
-R409	Chỗ quay xe	Chỉ dẫn vị trí được phép quay đầu xe kiểu chữ U nhưng không cho phép rẽ trái, trừ các xe được quyền ưu tiên theo Luật Giao thông đường bộ.
+r302a	Hướng đi phải đi vòng chướng ngại vật	Các loại xe (cơ giới và thô sơ) hướng đi vòng sang phải để qua một chướng ngại vật.
+r409	Chỗ quay xe	Chỉ dẫn vị trí được phép quay đầu xe kiểu chữ U nhưng không cho phép rẽ trái, trừ các xe được quyền ưu tiên theo Luật Giao thông đường bộ.
 p102	Cấm đi ngược chiều	Cấm các phương tiện giao thông di chuyển trên đường ngược chiều.
 p103a	Cấm xe ô tô số hiệu	Thông báo đường cấm tất cả các loại xe cơ giới kể cả môtô 3 bánh có thùng đi qua, trừ môtô hai bánh, xe gắn máy và các xe được ưu tiên theo quy định.
 p103b	Cấm xe ôtô rẽ phải	Thông báo đường cấm tất cả các loại xe cơ giới kể cả xe môtô 3 bánh có thùng xe rẽ phải, trừ xe môtô hai bánh, xe gắn máy và các xe được ưu tiên theo quy định của pháp luật.

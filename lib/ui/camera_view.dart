@@ -113,6 +113,10 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
     className = className.substring(0, className.length - 1);
 
     MySign? sign = _data.firstWhereOrNull((e) => e.id == className);
+    if (sign == null) {
+      print("...");
+    }
+
     MyDetectedObject result =
         MyDetectedObject(result: objectDetection, sign: sign);
     return result;
@@ -124,7 +128,7 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
     ;
     String pathObjectDetectionModel = widget.isBestModel
         ? "assets/models/best.torchscript"
-        : "assets/models/seco.torchscript";
+        : "assets/models/best192.torchscript";
     try {
       _objectModel = await PytorchLite.loadObjectDetectionModel(
           pathObjectDetectionModel, 35, imageSize, imageSize,

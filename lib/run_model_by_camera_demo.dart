@@ -125,7 +125,8 @@ class _RunModelByCameraDemoState extends State<RunModelByCameraDemo> {
 
   void checkAndAdd(List<MyDetectedObject>? results) {
     results?.forEach((element) {
-      if (!autoAudio.any((a) => a.name == element.sign?.id)) {
+      if (element.sign != null &&
+          !autoAudio.any((a) => a.name == element.sign?.id)) {
         autoAudio.add(AudioAuto(
             name: element.sign!.id, time: DateTime.now(), isPlay: false));
       }
