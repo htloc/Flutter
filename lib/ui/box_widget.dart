@@ -27,7 +27,7 @@ class BoxWidget extends StatelessWidget {
     //print(MediaQuery.of(context).size);
     Color? usedColor;
     //Size screenSize = CameraViewSingleton.inputImageSize;
-    Size screenSize = CameraViewSingleton.actualPreviewSizeH;
+    Size screenSize = CameraViewSingleton.screenSize;
 
     final assetsAudioPlayer = AssetsAudioPlayer();
     //Size screenSize = MediaQuery.of(context).size;

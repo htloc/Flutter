@@ -36,7 +36,7 @@ Future<List<MySign>> _loadCSVData() async {
 class CsvToObjectConverter {
   static Future<List<MySign>> convert(String csvString) async {
     List<List<dynamic>> csvData =
-        CsvToListConverter().convert(csvString, fieldDelimiter: '\t');
+        const CsvToListConverter().convert(csvString, fieldDelimiter: '\t');
 
     List<MySign> objects = [];
 
@@ -87,6 +87,13 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
   ModelObjectDetection? _objectModel;
   // ClassificationModel? _imageModel;
 
+  double _currentZoomLevel = 1.0;
+  double _minAvailableZoom = 1.0;
+  double _maxAvailableZoom = 1.0;
+  double _minAvailableExposureOffset = 0.0;
+  double _maxAvailableExposureOffset = 0.0;
+  double _currentExposureOffset = 0.0;
+
   List<MySign> _data = [];
   List<AssetsAudioPlayer> assetsAudioPlayer = [];
 
@@ -114,7 +121,7 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
 
     MySign? sign = _data.firstWhereOrNull((e) => e.id == className);
     if (sign == null) {
-      print("...");
+      print("Sign not found.");
     }
 
     MyDetectedObject result =
@@ -198,8 +205,8 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
 
     var desc = cameras[idx];
     _camFrameRotation = Platform.isAndroid ? desc.sensorOrientation : 0;
-    // cameras[0] for rear-camera
-    cameraController = CameraController(desc, ResolutionPreset.high,
+
+    cameraController = CameraController(desc, ResolutionPreset.medium,
         imageFormatGroup: Platform.isAndroid
             ? ImageFormatGroup.yuv420
             : ImageFormatGroup.bgra8888,
@@ -208,6 +215,21 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
     cameraController?.initialize().then((_) async {
       // Stream of image passed to [onLatestImageAvailable] callback
       await cameraController?.startImageStream(onLatestImageAvailable);
+
+      cameraController?.getMinZoomLevel().then((value) {
+        _currentZoomLevel = value;
+        _minAvailableZoom = value;
+      });
+      cameraController?.getMaxZoomLevel().then((value) {
+        _maxAvailableZoom = value;
+      });
+      _currentExposureOffset = 0.0;
+      cameraController?.getMinExposureOffset().then((value) {
+        _minAvailableExposureOffset = value;
+      });
+      cameraController?.getMaxExposureOffset().then((value) {
+        _maxAvailableExposureOffset = value;
+      });
 
       /// previewSize is size of each image frame captured by controller
       ///
@@ -231,8 +253,11 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
     if (cameraController == null || !cameraController!.value.isInitialized) {
       return Container();
     }
-
-    return CameraPreview(cameraController!);
+    // return CameraPreview(
+    //   cameraController!,
+    //   //child: widget.customPaint,
+    // );
+    return Scaffold(body: _liveFeedBody());
   }
 
   runClassification(CameraImage cameraImage) async {
@@ -320,6 +345,122 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
       default:
     }
   }
+
+  Widget _liveFeedBody() {
+    if (cameras.isEmpty) return Container();
+    if (cameraController == null) return Container();
+    if (cameraController?.value.isInitialized == false) return Container();
+
+    return Center(
+      child: CameraPreview(
+        cameraController!,
+        child: Stack(
+          children: <Widget>[
+            _zoomControl(),
+            _exposureControl(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _exposureControl() => Positioned(
+        top: 40,
+        right: 8,
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            maxHeight: 250,
+          ),
+          child: Column(children: [
+            Container(
+              width: 55,
+              decoration: BoxDecoration(
+                color: Colors.black54,
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Center(
+                  child: Text(
+                    '${_currentExposureOffset.toStringAsFixed(1)}x',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ),
+            ),
+            Expanded(
+              child: RotatedBox(
+                quarterTurns: 3,
+                child: SizedBox(
+                  height: 30,
+                  child: Slider(
+                    value: _currentExposureOffset,
+                    min: _minAvailableExposureOffset,
+                    max: _maxAvailableExposureOffset,
+                    activeColor: Colors.white,
+                    inactiveColor: Colors.white30,
+                    onChanged: (value) async {
+                      setState(() {
+                        _currentExposureOffset = value;
+                      });
+                      await cameraController?.setExposureOffset(value);
+                    },
+                  ),
+                ),
+              ),
+            )
+          ]),
+        ),
+      );
+
+  Widget _zoomControl() => Positioned(
+        bottom: 16,
+        left: 0,
+        right: 0,
+        child: Align(
+          alignment: Alignment.bottomCenter,
+          child: SizedBox(
+            width: 250,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: Slider(
+                    value: _currentZoomLevel,
+                    min: _minAvailableZoom,
+                    max: _maxAvailableZoom,
+                    activeColor: Colors.white,
+                    inactiveColor: Colors.white30,
+                    onChanged: (value) async {
+                      setState(() {
+                        _currentZoomLevel = value;
+                      });
+                      await cameraController?.setZoomLevel(value);
+                    },
+                  ),
+                ),
+                Container(
+                  width: 50,
+                  decoration: BoxDecoration(
+                    color: Colors.black54,
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Center(
+                      child: Text(
+                        '${_currentZoomLevel.toStringAsFixed(1)}x',
+                        style: const TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
 
   @override
   void dispose() {

@@ -22,15 +22,15 @@ p127_80	Tốc độ tối đa 80km/h	Cấm các loại xe cơ giới chạy vớ
 p127_90	Tốc độ tối đa 90km/h	Cấm các loại xe cơ giới chạy với tốc độ tối đa vượt quá 90km/h trừ các xe được quyền ưu tiên theo quy định của pháp luật.
 p130	Cấm dừng xe và đỗ xe	Cấm các loại xe cơ giới dừng và đỗ ở phía đường có đặt biển trừ các xe được ưu tiên theo quy định.
 p131a	Cấm đổ xe	Cấm các loại xe cơ giới đỗ ở phía đường có đặt biển
-w201a	Chỗ ngoặt nguy hiểm vòng bên trái	Báo hiệu đoạn đường sắp đến một điểm có chỗ ngoặt nguy hiểm vòng bên trái.
-w201b	Chỗ ngoặt nguy hiểm vòng bên phải	Báo hiệu cho người tham gia giao thông biết được đoạn đường sắp đến một điểm có chỗ ngoặt nguy hiểm vòng bên phải.
-w203a	Đường bị hẹp cả hai bên	Báo hiệu cho người tham gia giao thông biết được đoạn đường phía trước bị hẹp rất đột ngột ở cả 2 bên.
-w203b	Đường bị hẹp bên trái.	Báo hiệu cho người tham gia giao thông biết được đoạn đường phía trước bị hẹp đột ngột về phía trái.
-w203c	Đường bị hẹp bên phải.	Báo hiệu cho người tham gia giao thông biết được đoạn đường phía trước bị hẹp đột ngột về phía phải.
+w201a	Chỗ ngoặt nguy hiểm	Báo hiệu đoạn đường sắp đến một điểm có chỗ ngoặt nguy hiểm vòng bên trái.
+w201b	Chỗ ngoặt nguy hiểm	Báo hiệu cho người tham gia giao thông biết được đoạn đường sắp đến một điểm có chỗ ngoặt nguy hiểm vòng bên phải.
+w203a	Đường bị hẹp	Báo hiệu cho người tham gia giao thông biết được đoạn đường phía trước bị hẹp rất đột ngột ở cả 2 bên.
+w203b	Đường bị hẹp	Báo hiệu cho người tham gia giao thông biết được đoạn đường phía trước bị hẹp đột ngột về phía trái.
+w203c	Đường bị hẹp	Báo hiệu cho người tham gia giao thông biết được đoạn đường phía trước bị hẹp đột ngột về phía phải.
 w205a	Đường giao nhau	Báo hiệu phía trước sắp đến nơi giao nhau của các tuyến đường cùng cấp (không có đường nào ưu tiên).
 w207a	Giao nhau với đường không ưu tiên	Báo hiệu phía trước sắp đến nơi giao nhau với đường không ưu tiên.
-w207b	Giao nhau với đường không ưu tiên ( bên phải )	Báo hiệu phía trước sắp đến nơi giao nhau với đường không ưu tiên.
-w207c	Giao nhau với đường không ưu tiên ( bên trái )	Báo hiệu phía trước sắp đến nơi giao nhau với đường không ưu tiên.
+w207b	Giao nhau với đường không ưu tiên	Báo hiệu phía trước sắp đến nơi giao nhau với đường không ưu tiên.
+w207c	Giao nhau với đường không ưu tiên	Báo hiệu phía trước sắp đến nơi giao nhau với đường không ưu tiên.
 w209	Giao nhau có tính hiệu đèn.	Báo trước nơi giao nhau có sự điều khiển giao thông bằng tín hiệu đèn (hệ thống 3 đèn bật theo chiều đứng) và trong trường hợp thiết bị tín hiệu đèn không được nhìn thấy rõ ràng và kịp thời.
 w224	Đường người đi bộ cắt ngang	Báo trước sắp tới là phần đường dành cho người đi bộ sang qua đường.Khi gặp biển này, các phương tiện phải giảm tốc độ, nhường ưu tiên cho người đi bộ.
 w225	Biển báo nguy hiểm trẻ em	Báo trước là gần đến đoạn đường thường có trẻ em đi ngang qua hoặc tụ tập trên đường như ở vườn trẻ, trường học, câu lạc bộ
