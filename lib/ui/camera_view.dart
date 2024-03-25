@@ -64,13 +64,15 @@ class CameraView extends StatefulWidget {
   final String model;
   final String cameraQuality;
   final String size;
+  final double score;
 
   /// Constructor
   const CameraView(this.resultsCallback, this.resultsCallbackClassification,
       {Key? key,
       required this.model,
       required this.cameraQuality,
-      required this.size})
+      required this.size,
+      required this.score})
       : super(key: key);
   @override
   _CameraViewState createState() => _CameraViewState();
@@ -324,7 +326,7 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
           await _objectModel!.getCameraImagePrediction(
         cameraImage,
         _camFrameRotation,
-        minimumScore: 0.8,
+        minimumScore: widget.score,
         iOUThreshold: 0.8,
       );
       // Stop the stopwatch

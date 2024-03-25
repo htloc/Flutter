@@ -8,13 +8,15 @@ import 'package:assets_audio_player/assets_audio_player.dart';
 class RunModelByCameraDemo extends StatefulWidget {
   final String model;
   final String cameraQuality;
+  final double score;
   final String size;
 
   const RunModelByCameraDemo(
       {Key? key,
       required this.model,
       required this.cameraQuality,
-      required this.size})
+      required this.size,
+      required this.score})
       : super(key: key);
   @override
   _RunModelByCameraDemoState createState() => _RunModelByCameraDemoState();
@@ -60,6 +62,7 @@ class _RunModelByCameraDemoState extends State<RunModelByCameraDemo> {
             cameraQuality: widget.cameraQuality,
             model: widget.model,
             size: widget.size,
+            score: widget.score,
           ),
 
           // Bounding boxes

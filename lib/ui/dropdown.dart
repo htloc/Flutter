@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 /// Flutter code sample for [DropdownMenu].
 
 const List<String> modelSelections = <String>['192x192', '320x320', '640x640'];
-typedef SetModelCallback = void Function(String val);
-typedef SetCameraCallback = void Function(String val);
+typedef setStringCallback = void Function(String val);
+typedef setDoubleCallback = void Function(double val);
 
 const List<String> cameraSelections = <String>['High', 'Medium', 'Low'];
 const List<String> modelSizeSelections = <String>[
@@ -13,16 +13,20 @@ const List<String> modelSizeSelections = <String>[
   'Model M'
 ];
 
+const List<double> scoreSelections = <double>[0.6, 0.7, 0.8, 0.9, 1];
+
 class MyDropdownMenu extends StatefulWidget {
-  final SetModelCallback setModelcallback;
-  final SetCameraCallback setCameraCallback;
-  final SetCameraCallback setSizeCallback;
+  final setStringCallback setModelcallback;
+  final setStringCallback setCameraCallback;
+  final setStringCallback setSizeCallback;
+  final setDoubleCallback setScoreCallback;
 
   const MyDropdownMenu(
       {Key? key,
       required this.setModelcallback,
       required this.setCameraCallback,
-      required this.setSizeCallback})
+      required this.setSizeCallback,
+      required this.setScoreCallback})
       : super(key: key);
 
   @override
@@ -70,6 +74,20 @@ class _MyDropdownMenuState extends State<MyDropdownMenu> {
         dropdownMenuEntries:
             cameraSelections.map<DropdownMenuEntry<String>>((String value) {
           return DropdownMenuEntry<String>(value: value, label: value);
+        }).toList(),
+      ),
+      const Text("Select minimun score:"),
+      DropdownMenu<double>(
+        initialSelection: scoreSelections.first,
+        onSelected: ((value) => {
+              setState(() {
+                widget.setScoreCallback(value!);
+              })
+            }),
+        dropdownMenuEntries:
+            scoreSelections.map<DropdownMenuEntry<double>>((double value) {
+          return DropdownMenuEntry<double>(
+              value: value, label: value.toString());
         }).toList(),
       ),
     ]);

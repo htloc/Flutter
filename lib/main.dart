@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:pytorch_lite_example/run_model_by_camera_demo.dart';
 
@@ -18,6 +20,7 @@ class _ChooseDemoState extends State<ChooseDemo> {
   String modelValue = "192x192";
   String cameraValue = "High";
   String sizeValue = "Model S";
+  double score = 0.8;
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +46,9 @@ class _ChooseDemoState extends State<ChooseDemo> {
                   setSizeCallback: (val) => setState(() {
                     sizeValue = val;
                   }),
+                  setScoreCallback: (val) => setState(() {
+                    score = val;
+                  }),
                 ),
                 TextButton(
                   onPressed: () => {
@@ -53,6 +59,7 @@ class _ChooseDemoState extends State<ChooseDemo> {
                                 model: modelValue,
                                 cameraQuality: cameraValue,
                                 size: sizeValue,
+                                score: score,
                               )),
                     )
                   },
