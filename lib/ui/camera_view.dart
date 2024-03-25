@@ -226,7 +226,7 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
   /// Initializes the camera by setting [cameraController]
   void initializeCamera() async {
     cameras = await availableCameras();
-
+    ResolutionPreset quality = ResolutionPreset.medium;
     var idx =
         cameras.indexWhere((c) => c.lensDirection == CameraLensDirection.back);
     if (idx < 0) {
@@ -237,7 +237,19 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
     var desc = cameras[idx];
     _camFrameRotation = Platform.isAndroid ? desc.sensorOrientation : 0;
 
-    cameraController = CameraController(desc, ResolutionPreset.medium,
+    switch (widget.cameraQuality) {
+      case "High":
+        quality = ResolutionPreset.high;
+        break;
+      case "Medium":
+        quality = ResolutionPreset.medium;
+        break;
+      case "Low":
+        quality = ResolutionPreset.low;
+        break;
+    }
+
+    cameraController = CameraController(desc, quality,
         imageFormatGroup: Platform.isAndroid
             ? ImageFormatGroup.yuv420
             : ImageFormatGroup.bgra8888,

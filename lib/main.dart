@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:pytorch_lite_example/run_model_by_camera_demo.dart';
 
