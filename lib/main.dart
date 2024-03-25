@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pytorch_lite_example/run_model_by_camera_demo.dart';
 
+import 'ui/dropdown.dart';
+
 Future<void> main() async {
   runApp(const ChooseDemo());
 }
@@ -13,6 +15,10 @@ class ChooseDemo extends StatefulWidget {
 }
 
 class _ChooseDemoState extends State<ChooseDemo> {
+  String modelValue = "192x192";
+  String cameraValue = "High";
+  String sizeValue = "Model S";
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -27,33 +33,26 @@ class _ChooseDemoState extends State<ChooseDemo> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                TextButton(
-                  onPressed: () => {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const RunModelByCameraDemo(
-                                isBestModel: false,
-                              )),
-                    )
-                  },
-                  style: TextButton.styleFrom(
-                    backgroundColor: Colors.blue,
-                  ),
-                  child: const Text(
-                    "Run 192x192 Model (Fast)",
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
-                  ),
+                MyDropdownMenu(
+                  setCameraCallback: (val) => setState(() {
+                    cameraValue = val;
+                  }),
+                  setModelcallback: (val) => setState(() {
+                    modelValue = val;
+                  }),
+                  setSizeCallback: (val) => setState(() {
+                    sizeValue = val;
+                  }),
                 ),
                 TextButton(
                   onPressed: () => {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const RunModelByCameraDemo(
-                                isBestModel: true,
+                          builder: (context) => RunModelByCameraDemo(
+                                model: modelValue,
+                                cameraQuality: cameraValue,
+                                size: sizeValue,
                               )),
                     )
                   },
@@ -61,7 +60,7 @@ class _ChooseDemoState extends State<ChooseDemo> {
                     backgroundColor: Colors.blue,
                   ),
                   child: const Text(
-                    "Run 640x640 Model (Best Model - Slow)",
+                    "Start Camera",
                     style: TextStyle(
                       color: Colors.white,
                     ),

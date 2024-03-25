@@ -6,9 +6,15 @@ import 'package:assets_audio_player/assets_audio_player.dart';
 
 /// [RunModelByCameraDemo] stacks [CameraView] and [BoxWidget]s with bottom sheet for
 class RunModelByCameraDemo extends StatefulWidget {
-  final bool isBestModel;
+  final String model;
+  final String cameraQuality;
+  final String size;
 
-  const RunModelByCameraDemo({Key? key, required this.isBestModel})
+  const RunModelByCameraDemo(
+      {Key? key,
+      required this.model,
+      required this.cameraQuality,
+      required this.size})
       : super(key: key);
   @override
   _RunModelByCameraDemoState createState() => _RunModelByCameraDemoState();
@@ -51,11 +57,55 @@ class _RunModelByCameraDemoState extends State<RunModelByCameraDemo> {
           CameraView(
             resultsCallback,
             resultsCallbackClassification,
-            isBestModel: widget.isBestModel,
+            cameraQuality: widget.cameraQuality,
+            model: widget.model,
+            size: widget.size,
           ),
 
           // Bounding boxes
           boundingBoxes2(results),
+
+          //Bottom Sheet
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: DraggableScrollableSheet(
+              initialChildSize: 0.2,
+              minChildSize: 0.1,
+              maxChildSize: 0.5,
+              builder: (_, ScrollController scrollController) => Container(
+                width: double.maxFinite,
+                decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.8),
+                    borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(24.0),
+                        topRight: Radius.circular(24.0))),
+                child: SingleChildScrollView(
+                    controller: scrollController,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(Icons.keyboard_arrow_up,
+                            size: 48, color: Colors.orange),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            children: [
+                              if (classification != null)
+                                StatsRow('Classification:', '$classification'),
+                              if (classificationInferenceTime != null)
+                                StatsRow('Classification Inference time:',
+                                    '${classificationInferenceTime?.inMilliseconds} ms'),
+                              if (objectDetectionInferenceTime != null)
+                                StatsRow('Object Detection Inference time:',
+                                    '${objectDetectionInferenceTime?.inMilliseconds} ms'),
+                            ],
+                          ),
+                        )
+                      ],
+                    )),
+              ),
+            ),
+          )
         ],
       ),
     );

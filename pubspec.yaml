@@ -62,7 +62,9 @@ flutter:
   # the material Icons class.
   uses-material-design: true
   assets:
-    - assets/models/
+    - assets/models/yolov8s/
+    - assets/models/yolov8n/
+    - assets/models/yolov8m/
     - assets/labels/
     - assets/records/
     - assets/records/records_signs_auto/

@@ -61,11 +61,16 @@ class CameraView extends StatefulWidget {
       resultsCallback;
   final Function(String classification, Duration inferenceTime)
       resultsCallbackClassification;
-  final bool isBestModel;
+  final String model;
+  final String cameraQuality;
+  final String size;
 
   /// Constructor
   const CameraView(this.resultsCallback, this.resultsCallbackClassification,
-      {Key? key, required this.isBestModel})
+      {Key? key,
+      required this.model,
+      required this.cameraQuality,
+      required this.size})
       : super(key: key);
   @override
   _CameraViewState createState() => _CameraViewState();
@@ -131,11 +136,35 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
 
   //load your model
   Future loadModel() async {
-    final int imageSize = widget.isBestModel ? 640 : 192;
-    ;
-    String pathObjectDetectionModel = widget.isBestModel
-        ? "assets/models/best.torchscript"
-        : "assets/models/best192.torchscript";
+    String pathObjectDetectionModel = "";
+    int imageSize = 0;
+    switch (widget.size) {
+      case "Model S":
+        pathObjectDetectionModel = "assets/models/yolov8s/";
+        break;
+      case "Model N":
+        pathObjectDetectionModel = "assets/models/yolov8n/";
+        break;
+      case "Model M":
+        pathObjectDetectionModel = "assets/models/yolov8m/";
+        break;
+    }
+
+    switch (widget.model) {
+      case "192x192":
+        pathObjectDetectionModel += "yolov8_192x192.torchscript";
+        imageSize = 192;
+        break;
+      case "320x320":
+        pathObjectDetectionModel += "yolov8_320x320.torchscript";
+        imageSize = 320;
+        break;
+      case "640x640":
+        pathObjectDetectionModel += "yolov8_640x640.torchscript";
+        imageSize = 640;
+        break;
+    }
+
     try {
       _objectModel = await PytorchLite.loadObjectDetectionModel(
           pathObjectDetectionModel, 35, imageSize, imageSize,
@@ -351,15 +380,13 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
     if (cameraController == null) return Container();
     if (cameraController?.value.isInitialized == false) return Container();
 
-    return Center(
-      child: CameraPreview(
-        cameraController!,
-        child: Stack(
-          children: <Widget>[
-            _zoomControl(),
-            _exposureControl(),
-          ],
-        ),
+    return CameraPreview(
+      cameraController!,
+      child: Stack(
+        children: <Widget>[
+          _zoomControl(),
+          _exposureControl(),
+        ],
       ),
     );
   }

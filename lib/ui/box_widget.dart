@@ -24,16 +24,14 @@ class BoxWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Color for bounding box
-    //print(MediaQuery.of(context).size);
     Color? usedColor;
-    //Size screenSize = CameraViewSingleton.inputImageSize;
-    Size screenSize = CameraViewSingleton.screenSize;
+    Size screenSize = CameraViewSingleton.actualPreviewSizeH;
 
     final assetsAudioPlayer = AssetsAudioPlayer();
-    //Size screenSize = MediaQuery.of(context).size;
+
     var sign = result.sign;
     var detectedObject = result.result;
-    //print(screenSize);
+
     double factorX = screenSize.width;
     double factorY = screenSize.height;
     if (boxesColor == null) {
