@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-/// Flutter code sample for [DropdownMenu].
-
 const List<String> modelSelections = <String>['192x192', '320x320', '640x640'];
 typedef setStringCallback = void Function(String val);
 typedef setDoubleCallback = void Function(double val);

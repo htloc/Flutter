@@ -1,9 +1,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.zezo357.pytorch_lite_example">
+    package="com.traffic02.traffic_sign_recognition">
    <application
-        android:label="pytorch_lite_example"
+        android:label="Traffic Sign Recognition"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
             android:exported="true"

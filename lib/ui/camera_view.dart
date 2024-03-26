@@ -79,21 +79,11 @@ class CameraView extends StatefulWidget {
 }
 
 class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
-  /// List of available cameras
   late List<CameraDescription> cameras;
-
-  /// Controller
   CameraController? cameraController;
-
-  /// true when inference is ongoing
   bool predicting = false;
-
-  /// true when inference is ongoing
   bool predictingObjectDetection = false;
-
   ModelObjectDetection? _objectModel;
-  // ClassificationModel? _imageModel;
-
   double _currentZoomLevel = 1.0;
   double _minAvailableZoom = 1.0;
   double _maxAvailableZoom = 1.0;
@@ -217,7 +207,7 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
       }
       setState(() {});
     }
-    // Initially predicting = false
+
     setState(() {
       predicting = false;
     });
@@ -255,8 +245,7 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
             : ImageFormatGroup.bgra8888,
         enableAudio: false);
 
-    cameraController?.initialize().then((_) async {
-      // Stream of image passed to [onLatestImageAvailable] callback
+    await cameraController?.initialize().then((_) async {
       await cameraController?.startImageStream(onLatestImageAvailable);
 
       cameraController?.getMinZoomLevel().then((value) {
@@ -274,16 +263,9 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
         _maxAvailableExposureOffset = value;
       });
 
-      /// previewSize is size of each image frame captured by controller
-      ///
-      /// 352x288 on iOS, 240p (320x240) on Android with ResolutionPreset.low
       Size? previewSize = cameraController?.value.previewSize;
-
-      /// previewSize is size of raw input image to the model
       CameraViewSingleton.inputImageSize = previewSize!;
 
-      // the display width of image on screen is
-      // same as screenWidth while maintaining the aspectRatio
       Size screenSize = MediaQuery.of(context).size;
       CameraViewSingleton.screenSize = screenSize;
       CameraViewSingleton.ratio = cameraController!.value.aspectRatio;
@@ -292,14 +274,9 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    // Return empty container while the camera is not initialized
     if (cameraController == null || !cameraController!.value.isInitialized) {
       return Container();
     }
-    // return CameraPreview(
-    //   cameraController!,
-    //   //child: widget.customPaint,
-    // );
     return Scaffold(body: _liveFeedBody());
   }
 
@@ -360,8 +337,6 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
 
   /// Callback to receive each frame [CameraImage] perform inference on it
   onLatestImageAvailable(CameraImage cameraImage) async {
-    // Make sure we are still mounted, the background thread can return a response after we navigate away from this
-    // screen but before bg thread is killed
     if (!mounted) {
       return;
     }
@@ -371,23 +346,23 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
     }
   }
 
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) async {
-    if (!mounted) {
-      return;
-    }
-    switch (state) {
-      case AppLifecycleState.paused:
-        cameraController?.stopImageStream();
-        break;
-      case AppLifecycleState.resumed:
-        if (!cameraController!.value.isStreamingImages) {
-          await cameraController?.startImageStream(onLatestImageAvailable);
-        }
-        break;
-      default:
-    }
-  }
+  // @override
+  // void didChangeAppLifecycleState(AppLifecycleState state) async {
+  //   if (!mounted) {
+  //     return;
+  //   }
+  //   switch (state) {
+  //     case AppLifecycleState.paused:
+  //       cameraController?.stopImageStream();
+  //       break;
+  //     case AppLifecycleState.resumed:
+  //       if (!cameraController!.value.isStreamingImages) {
+  //         await cameraController?.startImageStream(onLatestImageAvailable);
+  //       }
+  //       break;
+  //     default:
+  //   }
+  // }
 
   Widget _liveFeedBody() {
     if (cameras.isEmpty) return Container();
@@ -409,7 +384,7 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
         top: 40,
         right: 8,
         child: ConstrainedBox(
-          constraints: BoxConstraints(
+          constraints: const BoxConstraints(
             maxHeight: 250,
           ),
           child: Column(children: [
@@ -424,7 +399,7 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
                 child: Center(
                   child: Text(
                     '${_currentExposureOffset.toStringAsFixed(1)}x',
-                    style: TextStyle(color: Colors.white),
+                    style: const TextStyle(color: Colors.white),
                   ),
                 ),
               ),

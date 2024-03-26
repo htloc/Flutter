@@ -1,4 +1,4 @@
-package com.zezo357.pytorch_lite_example;
+package com.traffic02.traffic_sign_recognition;
 
 import io.flutter.embedding.android.FlutterActivity;
 

@@ -1,7 +1,7 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
-import 'package:pytorch_lite_example/ui/camera_view.dart';
-import 'package:pytorch_lite_example/ui/camera_view_singleton.dart';
+import 'package:traffic_sign_recognition/ui/camera_view.dart';
+import 'package:traffic_sign_recognition/ui/camera_view_singleton.dart';
 
 class AudioAuto {
   final String name;
@@ -54,7 +54,6 @@ class BoxWidget extends StatelessWidget {
       height: detectedObject.rect.height * factorY,
       child: GestureDetector(
         onTap: () {
-          // Add your onPressed logic here
           var signId = sign?.id;
 
           try {
@@ -62,7 +61,7 @@ class BoxWidget extends StatelessWidget {
               Audio("assets/records/$signId.mp3"),
             );
           } catch (t) {
-            //print("Has an error when open audio.");
+            print("Has an error when open audio.");
           }
         },
         child: Container(

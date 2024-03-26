@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:pytorch_lite_example/run_model_by_camera_demo.dart';
+import 'package:traffic_sign_recognition/camera_handler.dart';
 
 import 'ui/dropdown.dart';
 
 Future<void> main() async {
-  runApp(const ChooseDemo());
+  runApp(const TrafficSignAlert());
 }
 
-class ChooseDemo extends StatefulWidget {
-  const ChooseDemo({Key? key}) : super(key: key);
+class TrafficSignAlert extends StatefulWidget {
+  const TrafficSignAlert({Key? key}) : super(key: key);
 
   @override
-  State<ChooseDemo> createState() => _ChooseDemoState();
+  State<TrafficSignAlert> createState() => _TrafficSignAlertState();
 }
 
-class _ChooseDemoState extends State<ChooseDemo> {
+class _TrafficSignAlertState extends State<TrafficSignAlert> {
   String modelValue = "192x192";
   String cameraValue = "High";
   String sizeValue = "Model S";
@@ -53,7 +53,7 @@ class _ChooseDemoState extends State<ChooseDemo> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => RunModelByCameraDemo(
+                          builder: (context) => CameraHandler(
                                 model: modelValue,
                                 cameraQuality: cameraValue,
                                 size: sizeValue,
